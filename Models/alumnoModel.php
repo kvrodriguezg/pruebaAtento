@@ -56,8 +56,8 @@ class AlumnoModel
             echo "Error: " . mysqli_error($this->db);
             return false;
         }
-    }    
-    
+    }
+
     function actualizarAlumno($idAlumno, $rut, $nombre, $apellidoP, $apellidoM, $edad, $carrera)
     {
         $query = "UPDATE Alumnos SET rut = '$rut', nombre = '$nombre', apellidoP = '$apellidoP', apellidoM = '$apellidoM',
