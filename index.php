@@ -26,7 +26,7 @@
         <input type="submit" class="btn btn-primary" value="Buscar">
     </div>
 </form>
-<table class="table">
+<table class="table table-striped text-center">
     <thead>
         <tr>
             <th>ID Alumno</th>
