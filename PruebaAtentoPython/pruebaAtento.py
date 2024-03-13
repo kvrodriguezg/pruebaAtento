@@ -1,9 +1,6 @@
 import tkinter
 from tkinter import messagebox
 import requests
-from selenium import webdriver
-from lxml import html
-
 
 ventana = tkinter.Tk()
 ventana.geometry("400x200")
@@ -58,5 +55,3 @@ def mostrarPersonajes(ventanaApi, id):
         tkinter.Label(ventanaApi, text=f"Estado: {personaje['status']}").pack()
 
 ventana.mainloop()
-
-
