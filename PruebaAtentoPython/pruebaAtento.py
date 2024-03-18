@@ -1,5 +1,5 @@
 import tkinter
-from tkinter import Scrollbar, messagebox
+from tkinter import messagebox
 import requests
 import selenium
 from selenium import webdriver
@@ -9,7 +9,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from urllib.request import urlopen
 from PIL import Image, ImageTk
 import time
-import io
 
 ventana = tkinter.Tk()
 ventana.geometry("400x200")
@@ -59,7 +58,11 @@ def mostrarProductos(ventanaBusqueda, producto):
 def abrirBusqueda():
     ventanaBusqueda = tkinter.Toplevel()
     ventanaBusqueda.geometry("600x600")
-    mostrarProductos(ventanaBusqueda, "labial")
+    etiquetaBusqueda = tkinter.Label(ventanaBusqueda, text="Ingresa un producto:").pack()
+    textboxBusqueda = tkinter.Entry(ventanaBusqueda)
+    textboxBusqueda.pack()
+    botonBuscar = tkinter.Button(ventanaBusqueda, text="Buscar", command=lambda: mostrarProductos(ventanaBusqueda, textboxBusqueda.get()))
+    botonBuscar.pack()
     ventanaBusqueda.mainloop()
 
 def validacionAcceso():
