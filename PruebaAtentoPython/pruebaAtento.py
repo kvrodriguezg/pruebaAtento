@@ -1,6 +1,15 @@
 import tkinter
-from tkinter import messagebox
+from tkinter import Scrollbar, messagebox
 import requests
+import selenium
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support import expected_conditions as EC
+from urllib.request import urlopen
+from PIL import Image, ImageTk
+import time
+import io
 
 ventana = tkinter.Tk()
 ventana.geometry("400x200")
@@ -24,9 +33,33 @@ def abrirApi():
         mostrarPersonajes(ventanaApi, i)       
     ventanaApi.mainloop()
 
+photo_list = [] 
+
+def mostrarProductos(ventanaBusqueda, producto):
+    url = 'https://www.falabella.com/falabella-cl'
+    service = Service(executable_path=r'C:\driver\chromedriver.exe')
+    driver = webdriver.Chrome(service=service)
+    driver.get(url)
+    botoncerrar = driver.find_element(By.XPATH,'//div[@class="dy-lb-close"]')
+    botoncerrar.click()
+    busqueda = driver.find_element(By.XPATH,'//input[@id="testId-SearchBar-Input"]')
+    busqueda.send_keys(producto)
+    botonBuscar = driver.find_element(By.XPATH,'//button[@class="SearchBar-module_searchBtnIcon__2L2s0"]')
+    botonBuscar.click()
+    time.sleep(5)
+    productos = driver.find_elements(By.XPATH,'//b[contains(@id,"testId-pod-displaySubTitle")]')
+    precios = driver.find_elements(By.XPATH,'//span[contains(@class,"copy10 primary medium jsx-280445118 normal       line-height-22")]')
+    #imagenes = driver.find_elements(By.XPATH,'//img[contains(@class,"jsx-1996933093")]')
+    productos_reversos = productos[::-1] 
+    precios_reversos = precios[::-1] 
+    for i in range(10):
+        tkinter.Label(ventanaBusqueda, text=f"Producto: {productos_reversos[i].text}, Precio: {precios_reversos[i].text}").pack()
+    driver.quit()
+
 def abrirBusqueda():
-    ventanaBusqueda = tkinter.Tk()
+    ventanaBusqueda = tkinter.Toplevel()
     ventanaBusqueda.geometry("600x600")
+    mostrarProductos(ventanaBusqueda, "labial")
     ventanaBusqueda.mainloop()
 
 def validacionAcceso():
@@ -39,7 +72,6 @@ def validacionAcceso():
     else:
         messagebox.showinfo("Error","Acceso incorrecto")
             
-
 botonIngresar = tkinter.Button(ventana, text="Ingresar", command=validacionAcceso)
 botonIngresar.pack()
 
@@ -53,5 +85,4 @@ def mostrarPersonajes(ventanaApi, id):
         tkinter.Label(ventanaApi, text=f"Especie: {personaje['species']}").pack()
         tkinter.Label(ventanaApi, text=f"Genero: {personaje['gender']}").pack()
         tkinter.Label(ventanaApi, text=f"Estado: {personaje['status']}").pack()
-
 ventana.mainloop()
