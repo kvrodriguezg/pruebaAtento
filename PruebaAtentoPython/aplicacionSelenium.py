@@ -1,4 +1,4 @@
-import selenium
+"""import selenium
 import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -32,5 +32,5 @@ time.sleep(60)
 
 
 
-driver.quit()
+driver.quit()"""
 
